@@ -1,3 +1,5 @@
+// ? is used for optional parameters 
+// ! is used for required parameters
 export class LoginModel {
   email!: string;
   password!: string;

@@ -1,11 +1,16 @@
 // React above v17 dont need to import React from "react"
+import React, { useEffect, useState } from "react";
 
 import {
 	Breadcrumbs,
 	Link,
 	Typography,
 	Button,
-	TextField
+	TextField,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	Select,
 } from "@material-ui/core";
 
 // formik form
@@ -23,17 +28,26 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// userTemplate
+// userTemplate for the user data
 import { CreateUserModel } from "../../models/AuthModel";
 
 // enum for the route paths
-import { RoutePaths } from "../../utils/enum";
+import { Role, RoutePaths } from "../../utils/enum";
+
+//
+import RoleModel from "../../models/RoleModel";
 
 // mui makeStyles
 import { materialCommonStyles } from "../../utils/materialCommonStyles";
 
 //mui default theme
 import { createAccountStyle } from "./style";
+
+import BaseList from "../../models/BaseList";
+
+import userService from "../../service/user.service";
+import { log } from "console";
+import authService from "../../service/auth.service";
 
 const Register = () => {
 	// styles using mui default theme
@@ -48,14 +62,32 @@ const Register = () => {
 	//
 	const initialValues: CreateUserModel = new CreateUserModel();
 
+	//
+	const [roleList, setRoleList] = useState<RoleModel[]>([]);
+
+	useEffect(() => {
+		getRoles();
+	}, []);
+
+	const getRoles = (): void => {
+		userService.getAllRoles().then((res: BaseList<RoleModel[]>) => {
+			if (res.records.length) {
+				setRoleList(
+					res.records.filter((role: RoleModel) => role.id !== Role.Admin)
+				);
+			}
+			console.log("RoleList3", roleList);
+		});
+	};
+
 	// validation schema
 	const validationSchema = Yup.object().shape({
 		email: Yup.string()
 			.email("Invalid email address format")
 			.required("Email is required"),
 		password: Yup.string()
-			.min(5, "Password must be 5 characters at minimum")
-			.required("Password is required"),
+			.required("Password is required")
+			.min(5, "Password must be 5 characters at minimum"),
 		confirmPassword: Yup.string()
 			.oneOf(
 				[Yup.ref("password"), null],
@@ -69,8 +101,10 @@ const Register = () => {
 
 	// Function to handle submit
 	const onSubmit = (data: CreateUserModel) => {
-		navigate(RoutePaths.Login);
-		toast.success("Successfully registered");
+		authService.create(data).then((res) => {
+			navigate(RoutePaths.Login);
+			toast.success("Successfully registered");
+		});
 	};
 
 	return (
@@ -157,8 +191,37 @@ const Register = () => {
 														touched={touched.email}
 													/>
 												</div>
-
-												
+												<div className="form-col">
+													<FormControl
+														className="dropdown-wrapper"
+														variant="outlined"
+													>
+														<InputLabel htmlFor="select">Roles</InputLabel>
+														<Select
+															name="roleId"
+															id={"roleId"}
+															inputProps={{ className: "small" }}
+															onChange={handleChange}
+															className={materialClasses.customSelect}
+															MenuProps={{
+																classes: {
+																	paper: materialClasses.customSelect,
+																},
+															}}
+															value={values.roleId}
+														>
+															{roleList.length > 0 &&
+																roleList.map((role: RoleModel) => (
+																	<MenuItem
+																		value={role.id}
+																		key={"name" + role.id}
+																	>
+																		{role.name}
+																	</MenuItem>
+																))}
+														</Select>
+													</FormControl>
+												</div>
 											</div>
 										</div>
 										<div className="login-information">

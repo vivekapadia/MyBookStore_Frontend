@@ -1,5 +1,4 @@
-import { number } from "yup/lib/locale"
-
+// ! is used for required parameters
 export default class RoleModel {
   id!: number;
   name!: string;

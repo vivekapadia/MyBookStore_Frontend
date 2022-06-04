@@ -6,14 +6,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-	useEffect(() => {
-		toast.success("Login Successful");
-	},[]);
+	// useEffect(() => {
+	// 	toast.success("Login Successful");
+	// },[]);
 
 	return (
 		<Container>
 			<Typography variant="h1">Login</Typography>
-			{/* <Button
+			<Button
 				variant="contained"
 				color="primary"
 				onClick={() => {
@@ -21,7 +21,7 @@ const Login = () => {
 				}}
 			>
 				Click
-			</Button> */}
+			</Button>
 		</Container>
 	);
 };
