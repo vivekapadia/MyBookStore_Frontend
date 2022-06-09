@@ -22,10 +22,12 @@ import { LoginModel } from "../../models/AuthModel";
 import authService from "../../service/auth.service";
 import ValidationErrorMessage from "../../components/ValidationErrorMessage";
 import { RoutePaths } from "../../utils/enum";
+import { useAuthContext } from "../../context/auth";
 
 const Login = () => {
 	const classes = loginStyle();
 	const navigate = useNavigate();
+	const authContext = useAuthContext();
 
 	const initialValues: LoginModel = new LoginModel();
 
@@ -40,7 +42,9 @@ const Login = () => {
 
 	const onSubmit = (values: LoginModel): void => {
 		authService.login(values).then((res) => {
-			// authContext.setUser(res);
+			console.log("RES", res);
+
+			authContext.setUser(res);
 			navigate("/");
 			toast.success("Successfully logged in");
 		});

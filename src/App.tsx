@@ -11,18 +11,22 @@ import MainNavigation from "./components/MainNavigation";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
+import { AuthWrapper } from "./context/auth";
+
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<React.Suspense fallback={<></>}>
 				<BrowserRouter>
-					<div className="wrapper">
-						<Header />
-						<main>
-							<MainNavigation />
-						</main>
-						<Footer />
-					</div>
+					<AuthWrapper>
+						<div className="wrapper">
+							<Header />
+							<main>
+								<MainNavigation />
+							</main>
+							<Footer />
+						</div>
+					</AuthWrapper>
 					<ToastContainer />
 				</BrowserRouter>
 			</React.Suspense>

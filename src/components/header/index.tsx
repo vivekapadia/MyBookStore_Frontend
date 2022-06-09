@@ -8,22 +8,22 @@ import siteLogo from "../../assets/images/site-logo.svg";
 import cartIcon from "../../assets/images/cart.png";
 import searchIcon from "../../assets/images/search.png";
 import { TextField, Button } from "@material-ui/core";
-// import Shared from "../../utils/shared";
-// import { AuthContextModel, useAuthContext } from "../../context/auth";
+import Shared from "../../utils/shared";
+import { AuthContextModel, useAuthContext } from "../../context/auth";
 import { RoutePaths } from "../../utils/enum";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-// import bookService from "../../service/book.service";
-// import { BookModel } from "../../models/BookModel";
+import bookService from "../../service/book.service";
+import { BookModel } from "../../models/BookModel";
 // import { CartContextModel, useCartContext } from "../../context/cart";
 
 const Header: React.FC = () => {
 	const classes = headerStyle();
-	// const authContext: AuthContextModel = useAuthContext();
+	const authContext: AuthContextModel = useAuthContext();
 	// const cartContext: CartContextModel = useCartContext();
 	const [open, setOpen] = useState<boolean>(false);
 	const [query, setquery] = useState<string>("");
-	// const [bookList, setbookList] = useState<BookModel[]>([]);
+	const [bookList, setbookList] = useState<BookModel[]>([]);
 	const [openSearchResult, setOpenSearchResult] = useState<boolean>(false);
 
 	const navigate = useNavigate();
@@ -33,30 +33,30 @@ const Header: React.FC = () => {
 		document.body.classList.toggle("open-menu");
 	};
 
-	// const items = useMemo(() => {
-	// 	return Shared.NavigationItems.filter(
-	// 		(item) =>
-	// 			!item.access.length || item.access.includes(authContext.user.roleId)
-	// 	);
-	// }, [authContext.user]);
+	const items = useMemo(() => {
+		return Shared.NavigationItems.filter(
+			(item) =>
+				!item.access.length || item.access.includes(authContext.user.roleid)
+		);
+	}, [authContext.user]);
 
 	const logOut = () => {
-		// authContext.signOut();
+		authContext.signOut();
 		// cartContext.emptyCart();
 	};
 
-	// const getBooks = async () => {
-	// 	const res = await bookService.getAll({
-	// 		pageIndex: 1,
-	// 		pageSize: 10,
-	// 		keyword: query,
-	// 	});
-	// 	setbookList(res.records);
-	// };
+	const getBooks = async () => {
+		const res = await bookService.getAll({
+			pageIndex: 1,
+			pageSize: 10,
+			keyword: query,
+		});
+		setbookList(res.results);
+	};
 
 	const search = () => {
 		document.body.classList.add("search-results-open");
-		// getBooks();
+		getBooks();
 		setOpenSearchResult(true);
 	};
 
@@ -95,7 +95,7 @@ const Header: React.FC = () => {
 							<div className="nav-wrapper">
 								<div className="top-right-bar">
 									<List className="top-nav-bar">
-										{/* {!authContext.user.id && (
+										{!authContext.user.id && (
 											<>
 												<ListItem>
 													<Link to={RoutePaths.Login} title="Login">
@@ -108,14 +108,14 @@ const Header: React.FC = () => {
 													</Link>
 												</ListItem>
 											</>
-										)} */}
-										{/* {items.map((item, index: number) => (
+										)}
+										{items.map((item, index: number) => (
 											<ListItem key={index}>
 												<Link to={item.route} title={item.name}>
 													{item.name}
 												</Link>
 											</ListItem>
-										))} */}
+										))}
 									</List>
 									<List className="cart-country-wrap">
 										<ListItem className="cart-link">
@@ -130,13 +130,13 @@ const Header: React.FC = () => {
 										</ListItem>
 									</List>
 
-									{/* {authContext.user.id && (
+									{authContext.user.id && (
 										<List className="right">
 											<Button onClick={() => logOut()} variant="outlined">
 												Log out
 											</Button>
 										</List>
-									)} */}
+									)}
 								</div>
 							</div>
 						</div>
@@ -168,12 +168,12 @@ const Header: React.FC = () => {
 									{openSearchResult && (
 										<>
 											<div className="product-listing">
-												{/* {bookList?.length == 0 && (
+												{bookList?.length == 0 && (
 													<p className="no-product">No product found</p>
-												)} */}
+												)}
 
-												{/* <p className="loading">Loading....</p> */}
-												{/* <List className="related-product-list">
+												<p className="loading">Loading....</p>
+												<List className="related-product-list">
 													{bookList?.length > 0 &&
 														bookList.map((item: BookModel) => {
 															return (
@@ -189,7 +189,7 @@ const Header: React.FC = () => {
 																			</span>
 																			<Link
 																				to="/"
-																				onClick={() => addToCart(item)}
+																				// onClick={() => addToCart(item)}
 																			>
 																				Add to cart
 																			</Link>
@@ -198,7 +198,7 @@ const Header: React.FC = () => {
 																</ListItem>
 															);
 														})}
-												</List> */}
+												</List>
 											</div>
 										</>
 									)}

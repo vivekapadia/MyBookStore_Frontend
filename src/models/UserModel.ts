@@ -23,7 +23,7 @@ export default class UserModel {
 	email!: string;
 	firstName!: string;
 	lastName!: string;
-	roleId!: number;
+	roleid!: number;
 	role?: string;
 	password?: string;
 }
