@@ -1,10 +1,10 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const axiosRequest = axios.create({
+const API = axios.create({
 	//  baseURL: "https://web1.anasource.com/BookStore/api/BookStore/", // url = base url + request url
-	// baseURL: 'https://localhost:44394/',
-	baseURL: "https://helperland1.azurewebsites.net/",
+	baseURL: 'https://localhost:44345/',
+	// baseURL: "https://helperland1.azurewebsites.net/",
 	//  baseURL: "http://192.168.1.20/",
 	timeout: 12400000,
 	responseType: "json",
@@ -14,7 +14,7 @@ let requests: string[] = [];
 let conflictRequest: string = "";
 
 // "Request" interceptors Customize based on your need
-axiosRequest.interceptors.request.use(
+API.interceptors.request.use(
 	async (config: any) => {
 		if (config.headers) {
 			config.headers["Content-Type"] = "application/json";
@@ -34,7 +34,7 @@ axiosRequest.interceptors.request.use(
 );
 
 // "Response" interceptors Customize based on your need
-axiosRequest.interceptors.response.use(
+API.interceptors.response.use(
 	(response: any) => {
 		const { data } = response;
 		removeRequest(response.config.url);
@@ -76,4 +76,4 @@ function removeRequest(req: string) {
 	}
 }
 
-export default axiosRequest;
+export default API;

@@ -59,10 +59,10 @@ const Register = () => {
 	// to navigate to other pages
 	const navigate = useNavigate();
 
-	//
+	// all properties for the user
 	const initialValues: CreateUserModel = new CreateUserModel();
 
-	//
+	// roles state for the dropdown
 	const [roleList, setRoleList] = useState<RoleModel[]>([]);
 
 	useEffect(() => {
@@ -71,12 +71,11 @@ const Register = () => {
 
 	const getRoles = (): void => {
 		userService.getAllRoles().then((res: BaseList<RoleModel[]>) => {
-			if (res.records.length) {
+			if (res.totalRecords > 0) {
 				setRoleList(
-					res.records.filter((role: RoleModel) => role.id !== Role.Admin)
+					res.results.filter((role: RoleModel) => role.id !== Role.Admin)
 				);
 			}
-			console.log("RoleList3", roleList);
 		});
 	};
 
