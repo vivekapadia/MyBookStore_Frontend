@@ -28,6 +28,7 @@ const Header: React.FC = () => {
 	const [query, setquery] = useState<string>("");
 	const [bookList, setbookList] = useState<BookModel[]>([]);
 	const [openSearchResult, setOpenSearchResult] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const navigate = useNavigate();
 
@@ -54,10 +55,12 @@ const Header: React.FC = () => {
 			pageSize: 10,
 			keyword: query,
 		});
+		setLoading(false);
 		setbookList(res.results);
 	};
 
 	const search = () => {
+		setLoading(true);
 		document.body.classList.add("search-results-open");
 		getBooks();
 		setOpenSearchResult(true);
@@ -151,7 +154,7 @@ const Header: React.FC = () => {
 						setOpenSearchResult(false);
 						document.body.classList.remove("search-results-open");
 					}}
-				></div>
+				>dgbgb</div>
 				<div className="header-search-wrapper">
 					<div className="container">
 						<div className="header-search-outer">
@@ -171,37 +174,41 @@ const Header: React.FC = () => {
 									{openSearchResult && (
 										<>
 											<div className="product-listing">
-												{bookList?.length == 0 && (
+												{bookList?.length == 0 && !loading && (
 													<p className="no-product">No product found</p>
 												)}
-
-												<p className="loading">Loading....</p>
-												<List className="related-product-list">
-													{bookList?.length > 0 &&
-														bookList.map((item: BookModel) => {
-															return (
-																<ListItem>
-																	<div className="inner-block">
-																		<div className="left-col">
-																			<span className="title">{item.name}</span>
-																			<p>{item.description}</p>
+												{loading ? (
+													<p className="loading">Loading....</p>
+												) : (
+													<List className="related-product-list">
+														{bookList?.length > 0 &&
+															bookList.map((item: BookModel) => {
+																return (
+																	<ListItem>
+																		<div className="inner-block">
+																			<div className="left-col">
+																				<span className="title">
+																					{item.name}
+																				</span>
+																				<p>{item.description}</p>
+																			</div>
+																			<div className="right-col">
+																				<span className="price">
+																					{item.price}
+																				</span>
+																				<Link
+																					to="/"
+																					// onClick={() => addToCart(item)}
+																				>
+																					Add to cart
+																				</Link>
+																			</div>
 																		</div>
-																		<div className="right-col">
-																			<span className="price">
-																				{item.price}
-																			</span>
-																			<Link
-																				to="/"
-																				// onClick={() => addToCart(item)}
-																			>
-																				Add to cart
-																			</Link>
-																		</div>
-																	</div>
-																</ListItem>
-															);
-														})}
-												</List>
+																	</ListItem>
+																);
+															})}
+													</List>
+												)}
 											</div>
 										</>
 									)}
