@@ -1,5 +1,8 @@
 import axios from "axios";
+
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const API = axios.create({
 	//  baseURL: "https://web1.anasource.com/BookStore/api/BookStore/", // url = base url + request url

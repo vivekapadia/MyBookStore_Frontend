@@ -4,7 +4,11 @@ import Shared from "../utils/shared";
 import { RoutePaths } from "../utils/enum";
 import UserModel from "../models/UserModel";
 import { useNavigate, useLocation } from "react-router-dom";
+
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { log } from "console";
 
 export interface AuthContextModel {
 	setUser: (user: UserModel) => void;
@@ -31,7 +35,9 @@ export const AuthWrapper: React.FC<React.PropsWithChildren<{}>> = ({
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
 
-	const setUser = (user: UserModel): void => {
+	const setUser = (user: UserModel): any => {
+		console.log("setUser", user);
+		
 		localStorage.setItem(Shared.LocalStorageKeys.USER, JSON.stringify(user));
 		_setUser(user);
 	};

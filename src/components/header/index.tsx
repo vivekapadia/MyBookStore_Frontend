@@ -11,7 +11,10 @@ import { TextField, Button } from "@material-ui/core";
 import Shared from "../../utils/shared";
 import { AuthContextModel, useAuthContext } from "../../context/auth";
 import { RoutePaths } from "../../utils/enum";
+
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { useNavigate } from "react-router-dom";
 import bookService from "../../service/book.service";
 import { BookModel } from "../../models/BookModel";

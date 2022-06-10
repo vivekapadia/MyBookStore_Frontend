@@ -20,7 +20,10 @@ import { defaultFilter } from "../../constant/constant";
 import categoryService from "../../service/category.service";
 import { CategoryModel } from "../../models/CategoryModel";
 import { AuthContextModel, useAuthContext } from "../../context/auth";
+
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { useNavigate } from "react-router-dom";
 import { RoutePaths } from "../../utils/enum";
 // import cartService from "../../service/cart.service";
