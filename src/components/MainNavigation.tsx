@@ -11,6 +11,7 @@ const Register = lazy(() => import("../pages/register"));
 const BookList = lazy(() => import("../pages/book-listing"));
 const Book = lazy(() => import("../pages/book"));
 const Cart = lazy(() => import("../pages/cart"));
+const UpdateProfile = lazy(() => import("../pages/updateProfile"));
 
 const AppRoutes: React.FC = () => {
 	const authContext = useAuthContext();
@@ -28,6 +29,10 @@ const AppRoutes: React.FC = () => {
 						<Route path={RoutePaths.AddBook} element={<EditBook />} />
 						<Route path={RoutePaths.EditBook} element={<EditBook />} />
 						<Route path={RoutePaths.Cart} element={<Cart />} />
+						<Route
+							path={RoutePaths.UpdateProfile}
+							element={<UpdateProfile />}
+						/>
 					</>
 				)}
 			</Routes>

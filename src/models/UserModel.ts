@@ -1,7 +1,7 @@
 // ? is used for optional parameters 
 // ! is used for required parameters
 export class AddOrEditUserModel {
-	id?: number;
+	id!: number;
 	email!: string;
 	firstName!: string;
 	lastName!: string;
@@ -11,6 +11,7 @@ export class AddOrEditUserModel {
 }
 
 export class UpdateProfileModel {
+	id!: number;
 	email!: string;
 	firstName!: string;
 	lastName!: string;
@@ -19,7 +20,8 @@ export class UpdateProfileModel {
 }
 
 export default class UserModel {
-	id?: number;
+  [x: string]: any;
+	id!: number;
 	email!: string;
 	firstName!: string;
 	lastName!: string;
