@@ -10,6 +10,7 @@ const Login = lazy(() => import("../pages/login/index"));
 const Register = lazy(() => import("../pages/register"));
 const BookList = lazy(() => import("../pages/book-listing"));
 const Book = lazy(() => import("../pages/book"));
+const Cart = lazy(() => import("../pages/cart"));
 
 const AppRoutes: React.FC = () => {
 	const authContext = useAuthContext();
@@ -19,7 +20,6 @@ const AppRoutes: React.FC = () => {
 			<Routes>
 				<Route path={RoutePaths.Login} element={<Login />} />
 				<Route path={RoutePaths.Register} element={<Register />} />
-
 				//Private Routing
 				{authContext.user.id && (
 					<>
@@ -27,6 +27,7 @@ const AppRoutes: React.FC = () => {
 						<Route path={RoutePaths.Book} element={<Book />} />
 						<Route path={RoutePaths.AddBook} element={<EditBook />} />
 						<Route path={RoutePaths.EditBook} element={<EditBook />} />
+						<Route path={RoutePaths.Cart} element={<Cart />} />
 					</>
 				)}
 			</Routes>

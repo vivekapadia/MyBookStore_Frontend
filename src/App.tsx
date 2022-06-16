@@ -12,6 +12,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 
 import { AuthWrapper } from "./context/auth";
+import { CartWrapper } from "./context/cart";
 
 function App() {
 	return (
@@ -19,13 +20,15 @@ function App() {
 			<React.Suspense fallback={<></>}>
 				<BrowserRouter>
 					<AuthWrapper>
-						<div className="wrapper">
-							<Header />
-							<main>
-								<MainNavigation />
-							</main>
-							<Footer />
-						</div>
+						<CartWrapper>
+							<div className="wrapper">
+								<Header />
+								<main>
+									<MainNavigation />
+								</main>
+								<Footer />
+							</div>
+						</CartWrapper>
 					</AuthWrapper>
 					<ToastContainer />
 				</BrowserRouter>

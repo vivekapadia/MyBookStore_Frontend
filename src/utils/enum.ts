@@ -10,7 +10,7 @@ export enum RoutePaths {
   EditBook = "/edit-book/:id",
   AddBook = "/add-book",
   BookListing = "/",
-  Cart = "/Cart",
+  Cart = "/cart",
   UpdateProfile = "/update-profile",
 }
 export enum Role {

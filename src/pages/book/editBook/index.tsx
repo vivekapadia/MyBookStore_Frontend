@@ -94,16 +94,22 @@ const EditBook: React.FC = () => {
 		setFieldError: any
 	): void => {
 		const files = e.target.files;
+		console.log("files", files);
+
 		if (files?.length) {
 			const fileSelected = e.target.files[0];
 			const fileNameArray = fileSelected.name.split(".");
 			const extension = fileNameArray.pop();
+
+			console.log({ fileSelected, fileNameArray, extension });
+
 			if (["png", "jpg", "jpeg"].includes(extension?.toLowerCase())) {
 				const reader = new FileReader();
 				reader.readAsDataURL(fileSelected);
 				reader.onload = function () {
 					setFieldValue("base64image", reader.result);
 				};
+
 				reader.onerror = function (error) {
 					throw error;
 				};
